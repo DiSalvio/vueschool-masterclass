@@ -25,5 +25,4 @@ export default {
   margin-top: 60px;
 }
 @import "assets/style.css"
-@import "~bootstrap/css/bootstrap.css"
 </style>
