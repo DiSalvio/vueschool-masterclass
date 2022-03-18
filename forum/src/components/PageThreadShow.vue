@@ -1,13 +1,6 @@
 <template>
-  <h1>Hello from PageHome</h1>
-  <div
-    v-for="thread in threads"
-    :key="thread.id"
-    class="col-large push-top"
-  >
-
-    <h1>{{thread.title}}</h1>
-
+  <div class="col-large push-top">
+    <h1>{{thread.title }}</h1>
     <div class="post-list">
 
       <div
@@ -51,6 +44,17 @@ export default {
       threads: sourceData.threads,
       posts: sourceData.posts,
       users: sourceData.users
+    }
+  },
+  props: {
+    id: {
+      required: true,
+      type: String
+    }
+  },
+  computed: {
+    thread () {
+      return this.threads.find(thread => thread.id === this.id)
     }
   },
   methods: {
