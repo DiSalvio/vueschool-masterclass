@@ -24,21 +24,18 @@
         </div>
       </div>
 
-      <div class="post-date text-faded" :title="readableDate(post.publishedAt)">
-        {{ elapsedTime(post.publishedAt) }}
-      </div>
+      <AppDate :timestamp="post.publishedAt"/>
     </div>
   </div>
 </template>
 
 <script>
 import sourceData from '@/data.json'
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import localizedFormat from 'dayjs/plugin/localizedFormat'
-dayjs.extend(relativeTime)
-dayjs.extend(localizedFormat)
+import AppDate from '@/components/AppDate.vue'
 export default {
+  components: {
+    AppDate
+  },
   props: {
     posts: {
       required: true,
@@ -53,12 +50,6 @@ export default {
   methods: {
     findUserById (postUserId) {
       return this.users.find(user => user.id === postUserId)
-    },
-    elapsedTime (timestamp) {
-      return dayjs.unix(timestamp).fromNow()
-    },
-    readableDate (timestamp) {
-      return dayjs.unix(timestamp).format('llll')
     }
   }
 }
