@@ -1,9 +1,6 @@
 <template>
   <div class="col-full">
     <div class="forum-list">
-      <h2 class="list-title">
-        Forums
-      </h2>
 
       <div v-for="forum in forums" :key="forum.id" class="forum-listing">
         <div class="forum-details">

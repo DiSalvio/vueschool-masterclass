@@ -1,18 +1,20 @@
 <template>
   <h1>Welcome to the forum</h1>
-  <ForumList :forums="forums"/>
+  <div class="col-full">
+    <CategoriesList :categories="categories"/>
+  </div>
 </template>
 
 <script>
 import sourceData from '@/data.json'
-import ForumList from '@/components/ForumList.vue'
+import CategoriesList from '@/components/CategoriesList.vue'
 export default {
   components: {
-    ForumList
+    CategoriesList
   },
   data () {
     return {
-      forums: sourceData.forums
+      categories: sourceData.categories
     }
   }
 }
