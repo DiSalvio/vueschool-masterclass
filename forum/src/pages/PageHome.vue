@@ -6,15 +6,14 @@
 </template>
 
 <script>
-import sourceData from '@/data.json'
 import CategoriesList from '@/components/CategoriesList.vue'
 export default {
   components: {
     CategoriesList
   },
-  data () {
-    return {
-      categories: sourceData.categories
+  computed: {
+    categories () {
+      return this.$store.state.categories
     }
   }
 }

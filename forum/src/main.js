@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import store from '@/store'
 import router from '@/router/'
 
 const requireComponent = require.context('@/components', true, /App[A-Z]\w+\.(vue|js)$/)
@@ -12,4 +13,5 @@ requireComponent.keys().forEach((fileName) => {
   const baseComponentName = baseComponentConfig.name || fileName.replace(/^.+\//, '').replace(/\.\w+$/, '')
   forumApp.component(baseComponentName, baseComponentConfig)
 })
+forumApp.use(store)
 forumApp.mount('#app')

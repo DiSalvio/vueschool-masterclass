@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import sourceData from '@/data.json'
 import ForumList from '@/components/ForumList.vue'
 export default {
   components: {
@@ -22,8 +21,8 @@ export default {
   },
   data () {
     return {
-      categories: sourceData.categories,
-      forums: sourceData.forums
+      categories: this.$store.state.categories,
+      forums: this.$store.state.forums
     }
   },
   computed: {
