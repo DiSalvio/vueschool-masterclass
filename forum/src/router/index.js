@@ -1,6 +1,7 @@
 import PageHome from '@/pages/PageHome.vue'
 import PageThreadShow from '@/pages/PageThreadShow.vue'
 import PageNotFound from '@/pages/PageNotFound.vue'
+import PageUserProfile from '@/pages/PageUserProfile.vue'
 import CategoryShow from '@/pages/CategoryShow.vue'
 import ForumShow from '@/pages/ForumShow.vue'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -11,6 +12,11 @@ const routes = [
     path: '/',
     name: 'PageHome',
     component: PageHome
+  },
+  {
+    path: '/profile',
+    name: 'PageUserProfile',
+    component: PageUserProfile
   },
   {
     path: '/forum/:id',
