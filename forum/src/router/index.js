@@ -1,5 +1,6 @@
 import PageHome from '@/pages/PageHome.vue'
 import PageThreadShow from '@/pages/PageThreadShow.vue'
+import PageThreadAdd from '@/pages/PageThreadAdd.vue'
 import PageNotFound from '@/pages/PageNotFound.vue'
 import PageUserProfile from '@/pages/PageUserProfile.vue'
 import CategoryShow from '@/pages/CategoryShow.vue'
@@ -24,6 +25,12 @@ const routes = [
     name: 'PageUserProfileEdit',
     component: PageUserProfile,
     props: { editing: true }
+  },
+  {
+    path: '/forum/:forumId/thread/add',
+    name: 'PageThreadAdd',
+    component: PageThreadAdd,
+    props: true
   },
   {
     path: '/forum/:id',
