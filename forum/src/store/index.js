@@ -9,6 +9,7 @@ export default createStore({
     userMod: userModule
   },
   state: {
-    ...sourceData
+    ...sourceData,
+    authId: 'VXjpr2WHa8Ux4Bnggym8QFLdv5C3'
   }
 })

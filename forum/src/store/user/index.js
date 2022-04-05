@@ -4,12 +4,11 @@ const userModule = {
   state: {
     users: sourceData.users,
     posts: sourceData.posts,
-    threads: sourceData.threads,
-    authId: 'VXjpr2WHa8Ux4Bnggym8QFLdv5C3'
+    threads: sourceData.threads
   },
   getters: {
-    authUser (state) {
-      const user = state.users.find(user => user.id === state.authId)
+    authUser (state, getters, rootState) {
+      const user = state.users.find(user => user.id === rootState.authId)
       if (!user) return null
       return {
         ...user,

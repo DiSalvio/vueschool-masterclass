@@ -10,10 +10,12 @@ const threadsModule = {
   getters: {
   },
   actions: {
-    createPost (context, post) {
+    createPost ({ state, commit, rootState }, post) {
       post.id = 'gggg' + Math.random()
-      context.commit('setPost', { post })
-      context.commit('addPostToThread', { postId: post.id, threadId: post.threadId })
+      post.publishedAt = Math.floor(Date.now() / 1000)
+      post.userId = rootState.authId
+      commit('setPost', { post })
+      commit('addPostToThread', { postId: post.id, threadId: post.threadId })
     }
   },
   mutations: {
