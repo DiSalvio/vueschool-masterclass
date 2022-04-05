@@ -19,6 +19,12 @@ const routes = [
     component: PageUserProfile
   },
   {
+    path: '/profile/edit',
+    name: 'PageUserProfileEdit',
+    component: PageUserProfile,
+    props: { editing: true }
+  },
+  {
     path: '/forum/:id',
     name: 'ForumShow',
     component: ForumShow,

@@ -21,10 +21,14 @@
         <span>{{ user.threadsCount }} threads</span>
     </div>
 
-    <hr>
-
     <p v-if="user.website" class="text-large text-center"><i class="fa fa-globe"></i> <a :href="user.website">{{ user.website }}</a></p>
 
+  </div>
+  <div class="text-center">
+    <hr>
+    <router-link :to="{name: 'PageUserProfileEdit'}" class="btn-green btn-small">Edit Profile</router-link>
+
+    <p class="text-xsmall text-faded text-center push-top">Member since june 2003, last visited 4 hours ago</p>
   </div>
 </template>
 
