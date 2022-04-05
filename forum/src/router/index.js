@@ -16,7 +16,8 @@ const routes = [
   {
     path: '/profile',
     name: 'PageUserProfile',
-    component: PageUserProfile
+    component: PageUserProfile,
+    meta: { scrollToTop: true, smoothScroll: true }
   },
   {
     path: '/profile/edit',
@@ -64,5 +65,11 @@ const routes = [
 
 export default createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior (to) {
+    const scroll = {}
+    if (to.meta.scrollToTop) scroll.top = 0
+    if (to.meta.smoothScroll) scroll.behavior = 'smooth'
+    return scroll
+  }
 })
