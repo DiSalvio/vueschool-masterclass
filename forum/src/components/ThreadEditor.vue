@@ -12,17 +12,32 @@
 
     <div class="btn-group">
       <button @click="cancelSaveThread" class="btn btn-ghost">Cancel</button>
-      <button class="btn btn-blue" type="submit" name="Publish">Publish </button>
+      <button class="btn btn-blue" type="submit" name="Publish">{{ existingThread ? 'Update' : 'Publish' }}</button>
     </div>
   </form>
 </template>
 
 <script>
 export default {
+  props: {
+    title: {
+      type: String,
+      default: ''
+    },
+    text: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
-      newThreadTitle: '',
-      newThreadText: ''
+      newThreadTitle: this.title,
+      newThreadText: this.text
+    }
+  },
+  computed: {
+    existingThread () {
+      return !!this.title
     }
   },
   methods: {
