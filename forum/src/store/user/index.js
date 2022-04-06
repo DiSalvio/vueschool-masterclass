@@ -1,4 +1,5 @@
 import sourceData from '@/data.json'
+import { findById, replaceItemInArray } from '@/helpers/index.js'
 
 const userModule = {
   state: {
@@ -8,7 +9,7 @@ const userModule = {
   },
   getters: {
     authUser (state, getters, rootState) {
-      const user = state.users.find(user => user.id === rootState.authId)
+      const user = findById(state.users, rootState.authId)
       if (!user) return null
       return {
         ...user,
@@ -34,8 +35,7 @@ const userModule = {
   },
   mutations: {
     setUser (state, { user, userId }) {
-      const userIndex = state.users.findIndex(user => user.id === userId)
-      state.users[userIndex] = user
+      replaceItemInArray(state.users, user)
     }
   }
 }

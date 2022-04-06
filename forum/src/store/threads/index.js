@@ -1,4 +1,5 @@
 import sourceData from '@/data.json'
+import { findById, replaceItemInArray } from '@/helpers/index.js'
 
 const threadsModule = {
   state () {
@@ -11,10 +12,10 @@ const threadsModule = {
   },
   getters: {
     thread (state) {
-      return (threadId) => state.threads.find(thread => thread.id === threadId)
+      return (threadId) => findById(state.threads, threadId)
     },
     threadFirstPost (state, getters) {
-      return (threadId) => state.posts.find(post => post.id === getters.thread(threadId).posts[0])
+      return (threadId) => findById(state.posts, getters.thread(threadId).posts[0])
     }
   },
   actions: {
@@ -30,7 +31,7 @@ const threadsModule = {
       commit('setThread', { newThread })
       commit('addThreadToForum', { threadId: newThread.id, forumId: forumId })
       dispatch('createPost', { text, threadId: newThread.id })
-      return state.threads.find(thread => thread.id === newThread.id)
+      return findById(state.threads, newThread.id)
     },
     createPost ({ state, commit, rootState }, post) {
       post.id = 'gggg' + Math.random()
@@ -60,19 +61,19 @@ const threadsModule = {
       state.threads.push(newThread)
     },
     addThreadToForum (state, { threadId, forumId }) {
-      state.forums.find(forum => forum.id === forumId).threads.push(threadId)
+      findById(state.forums, forumId).threads.push(threadId)
     },
     updateThread (state, { newThread }) {
-      state.threads[state.threads.findIndex(thread => thread.id === newThread.id)] = newThread
+      replaceItemInArray(state.threads, newThread)
     },
     setPost (state, { post }) {
       state.posts.push(post)
     },
     addPostToThread (state, { postId, threadId }) {
-      state.threads.find(thread => thread.id === threadId).posts.push(postId)
+      findById(state.threads, threadId).posts.push(postId)
     },
     updatePost (state, { newPost }) {
-      state.posts[state.posts.findIndex(post => post.id === newPost.id)] = newPost
+      replaceItemInArray(state.posts, newPost)
     }
   }
 }
