@@ -1,5 +1,5 @@
 import sourceData from '@/data.json'
-import { findById, replaceItemInArray } from '@/helpers/index.js'
+import { findById, replaceItemInArray, makeAddChildToParent } from '@/helpers/index.js'
 
 const threadsModule = {
   state () {
@@ -29,7 +29,7 @@ const threadsModule = {
         posts: []
       }
       commit('setThread', { newThread })
-      commit('addThreadToForum', { threadId: newThread.id, forumId: forumId })
+      commit('addThreadToForum', { childId: newThread.id, parentId: forumId })
       dispatch('createPost', { text, threadId: newThread.id })
       return findById(state.threads, newThread.id)
     },
@@ -38,7 +38,7 @@ const threadsModule = {
       post.publishedAt = Math.floor(Date.now() / 1000)
       post.userId = rootState.authId
       commit('setPost', { post })
-      commit('addPostToThread', { postId: post.id, threadId: post.threadId })
+      commit('addPostToThread', { childId: post.id, parentId: post.threadId })
     },
     async updateThread ({ state, commit, getters }, { title, text, threadId }) {
       const thread = getters.thread(threadId)
@@ -60,18 +60,14 @@ const threadsModule = {
     setThread (state, { newThread }) {
       state.threads.push(newThread)
     },
-    addThreadToForum (state, { threadId, forumId }) {
-      findById(state.forums, forumId).threads.push(threadId)
-    },
+    addThreadToForum: makeAddChildToParent({ parent: 'forums', child: 'threads' }),
     updateThread (state, { newThread }) {
       replaceItemInArray(state.threads, newThread)
     },
     setPost (state, { post }) {
       state.posts.push(post)
     },
-    addPostToThread (state, { postId, threadId }) {
-      findById(state.threads, threadId).posts.push(postId)
-    },
+    addPostToThread: makeAddChildToParent({ parent: 'threads', child: 'posts' }),
     updatePost (state, { newPost }) {
       replaceItemInArray(state.posts, newPost)
     }
