@@ -1,5 +1,10 @@
 import sourceData from '@/data.json'
-import { findById, replaceItemInArray, makeAddChildToParent } from '@/helpers/index.js'
+import {
+  findById,
+  makeReplaceItemInArray,
+  makeAddChildToParent,
+  makeSetItem
+} from '@/helpers/index.js'
 
 const threadsModule = {
   state () {
@@ -28,7 +33,7 @@ const threadsModule = {
         userId: rootState.authId,
         posts: []
       }
-      commit('setThread', { newThread })
+      commit('setThread', { item: newThread })
       commit('addThreadToForum', { childId: newThread.id, parentId: forumId })
       dispatch('createPost', { text, threadId: newThread.id })
       return findById(state.threads, newThread.id)
@@ -37,7 +42,7 @@ const threadsModule = {
       post.id = 'gggg' + Math.random()
       post.publishedAt = Math.floor(Date.now() / 1000)
       post.userId = rootState.authId
-      commit('setPost', { post })
+      commit('setPost', { item: post })
       commit('addPostToThread', { childId: post.id, parentId: post.threadId })
     },
     async updateThread ({ state, commit, getters }, { title, text, threadId }) {
@@ -51,26 +56,18 @@ const threadsModule = {
         ...post,
         text
       }
-      commit('updateThread', { newThread })
-      commit('updatePost', { newPost })
+      commit('updateThread', { item: newThread })
+      commit('updatePost', { item: newPost })
       return newThread
     }
   },
   mutations: {
-    setThread (state, { newThread }) {
-      state.threads.push(newThread)
-    },
+    setThread: makeSetItem({ resource: 'threads' }),
     addThreadToForum: makeAddChildToParent({ parent: 'forums', child: 'threads' }),
-    updateThread (state, { newThread }) {
-      replaceItemInArray(state.threads, newThread)
-    },
-    setPost (state, { post }) {
-      state.posts.push(post)
-    },
+    updateThread: makeReplaceItemInArray({ resource: 'threads' }),
+    setPost: makeSetItem({ resource: 'posts' }),
     addPostToThread: makeAddChildToParent({ parent: 'threads', child: 'posts' }),
-    updatePost (state, { newPost }) {
-      replaceItemInArray(state.posts, newPost)
-    }
+    updatePost: makeReplaceItemInArray({ resource: 'posts' })
   }
 }
 

@@ -1,5 +1,5 @@
 import sourceData from '@/data.json'
-import { findById, replaceItemInArray } from '@/helpers/index.js'
+import { findById, makeReplaceItemInArray } from '@/helpers/index.js'
 
 const userModule = {
   state: {
@@ -30,13 +30,11 @@ const userModule = {
   },
   actions: {
     saveUserProfileChanges ({ commit }, user) {
-      commit('setUser', { user, userId: user.id })
+      commit('setUser', { item: user })
     }
   },
   mutations: {
-    setUser (state, { user, userId }) {
-      replaceItemInArray(state.users, user)
-    }
+    setUser: makeReplaceItemInArray({ resource: 'users' })
   }
 }
 
