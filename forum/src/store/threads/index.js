@@ -17,7 +17,24 @@ const threadsModule = {
   },
   getters: {
     thread (state) {
-      return (threadId) => findById(state.threads, threadId)
+      return (threadId) => {
+        const thread = findById(state.threads, threadId)
+        return {
+          ...thread,
+          get contributors () {
+            return thread.contributors || []
+          },
+          get author () {
+            return findById(state.users, thread.userId).name
+          },
+          get repliesCount () {
+            return thread.posts.length - 1
+          },
+          get contributorsCount () {
+            return this.contributors.length
+          }
+        }
+      }
     },
     threadFirstPost (state, getters) {
       return (threadId) => findById(state.posts, getters.thread(threadId).posts[0])
@@ -44,6 +61,7 @@ const threadsModule = {
       post.userId = rootState.authId
       commit('setPost', { item: post })
       commit('addPostToThread', { childId: post.id, parentId: post.threadId })
+      commit('addContributorToThread', { childId: state.authId, parentId: post.threadId })
     },
     async updateThread ({ state, commit, getters }, { title, text, threadId }) {
       const thread = getters.thread(threadId)
@@ -67,6 +85,7 @@ const threadsModule = {
     updateThread: makeReplaceItemInArray({ resource: 'threads' }),
     setPost: makeSetItem({ resource: 'posts' }),
     addPostToThread: makeAddChildToParent({ parent: 'threads', child: 'posts' }),
+    addContributorToThread: makeAddChildToParent({ parent: 'threads', child: 'contributors' }),
     updatePost: makeReplaceItemInArray({ resource: 'posts' })
   }
 }

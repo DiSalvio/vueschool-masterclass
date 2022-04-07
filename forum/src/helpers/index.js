@@ -6,7 +6,10 @@ export const replaceItemInArray = (resource, item) => {
 
 export const makeAddChildToParent = ({ parent, child }) => {
   return (state, { parentId, childId }) => {
-    findById(state[parent], parentId)[child].push(childId)
+    const resource = findById(state[parent], parentId)
+    if (!resource[child].includes(childId)) {
+      resource[child].push(childId)
+    }
   }
 }
 
